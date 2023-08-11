@@ -7,8 +7,32 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-list >
+    <ion-item-sliding *ngFor="let filme of filmeService.getFilmes(); let i = index">
+
+      <ion-item *ngIf="!filme.done">
+        <ion-label>{{filme.value}}</ion-label>
+        <ion-checkbox slot="start" [(ngModel)]="filme.done"></ion-checkbox>
+        <ion-badge color="warning" *ngIf="filme.date">
+          {{filme.date | date: 'dd/MM/yyyy'}}
+        </ion-badge>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="success" (click)="updateShow(i, filme, genero)">
+          <ion-icon name="create-outline" slot="icon-only"></ion-icon>
+        </ion-item-option>
+
+        <ion-item-option color="danger" (click)="delShow(i)">
+          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+      
+    </ion-item-sliding>
+  </ion-list>
+
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="danger" (click)="presentAlertPromptAdd()">
+    <ion-fab-button color="danger" (click)="adicionandoShow()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
